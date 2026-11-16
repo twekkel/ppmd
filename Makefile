@@ -28,6 +28,9 @@ install: $(TARGET)
 	install -m 755 $(TARGET) $(DESTDIR)$(BINDIR)/$(TARGET)
 	for l in $(LINKS); do ln -sf $(TARGET) $(DESTDIR)$(BINDIR)/$$l; done
 
+test: $(TARGET)
+	@[ "$$(echo test | ./$(TARGET) -c | ./$(TARGET) -d)" = test ] && echo OK || { echo FAILED; exit 1; }
+
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/$(TARGET) $(addprefix $(DESTDIR)$(BINDIR)/,$(LINKS))
 
